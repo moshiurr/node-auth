@@ -14,7 +14,6 @@ router.post("/register", async (req, res) => {
 
 	//No error , So creating a new user using the User Schema
 	const user = new User({
-		_id: "13rfasdfgag",
 		name: req.body.name,
 		email: req.body.email,
 		password: req.body.password,
@@ -25,6 +24,15 @@ router.post("/register", async (req, res) => {
 	} catch (err) {
 		res.status(400).send(err);
 	}
+});
+
+router.route("/login").get(async (req, res) => {
+	const emailExist = await User.findOne({ email: req.body.email });
+	if (emailExist) {
+		if (emailExist.password === req.body.password)
+			res.status(200).send("Welcome");
+		else res.status(200).send("Incorrect password");
+	} else res.status(200).send("Email does not exist");
 });
 
 module.exports = router;

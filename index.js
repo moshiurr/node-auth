@@ -11,11 +11,18 @@ dotenv.config();
 // connect to db
 mongoose.connect(
 	process.env.DB_CONNECT,
-	{ useUnifiedTopology: true },
-	//{ useNewUrlParser: true },
+	{
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useCreateIndex: true,
+	},
 	() => console.log("connected to db!")
 );
+// const connection = mongoose.connection;
 
+// connection.once("open", function () {
+// 	console.log("MongoDB database connection established successfully");
+// });
 //Middleware
 app.use(express.json());
 
